@@ -27,16 +27,15 @@ class _SplashScreenState extends State<SplashScreen> {
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height / 10,
-              width: MediaQuery.of(context).size.width / 8,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                image: AssetImage('images/splash.png'),
-              )),
-            ),
+            // Container(
+            //   height: MediaQuery.of(context).size.height / 10,
+            //   width: MediaQuery.of(context).size.width / 8,
+            //   decoration: const BoxDecoration(
+            //       image: DecorationImage(
+            //     image: AssetImage('images/splash.png'),
+            //   )),
+            // ),
             Center(
               child: TextLiquidFill(
                 boxHeight: MediaQuery.of(context).size.height / 8,
