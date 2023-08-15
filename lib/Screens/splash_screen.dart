@@ -1,5 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:wowtickets/Screens/qrc_screen.dart';
+import 'package:wowtickets/constants.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -10,20 +12,21 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  // void initState() {
-  //   super.initState();
-  //   delay();
-  // }
+  void initState() {
+    super.initState();
+    delay();
+  }
 
-  // void delay() async {
-  //   await Future.delayed(const Duration(seconds: 7));
-  //   Navigator.pushReplacement(
-  //       context, MaterialPageRoute(builder: (context) => const Login()));
-  // }
+  void delay() async {
+    await Future.delayed(const Duration(seconds: 7));
+    // ignore: use_build_context_synchronously
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => const QRCodeScanScreen()));
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: backgroundColor,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -40,14 +43,14 @@ class _SplashScreenState extends State<SplashScreen> {
               child: TextLiquidFill(
                 boxHeight: MediaQuery.of(context).size.height / 8,
                 text: 'WOW\nTICKETS',
-                textStyle: const TextStyle(
+                textStyle: TextStyle(
                   fontFamily: 'Poppins',
-                  color: Colors.white,
+                  color: backgroundColor,
                   fontSize: 30,
                 ),
-                waveColor: const Color(0xffEF5464),
+                waveColor: primaryColor,
                 waveDuration: const Duration(seconds: 4),
-                boxBackgroundColor: Colors.white,
+                boxBackgroundColor: backgroundColor,
               ),
             )
           ],

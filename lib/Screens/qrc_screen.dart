@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:wowtickets/constants.dart';
 
 class QRCodeScanScreen extends StatefulWidget {
   const QRCodeScanScreen({super.key});
@@ -14,31 +15,39 @@ class _QRCodeScanScreenState extends State<QRCodeScanScreen> {
   QRViewController? controller;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('QR Code Scanner')),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 4,
-            child: QRView(
-              key: qrKey,
-              onQRViewCreated: (controller) {
-                this.controller = controller;
-                controller.scannedDataStream.listen((scanData) {
-                  // Handle the scanned QR code data here
-                });
-              },
-            ),
-          ),
-        ],
-      ),
-    );
+  dispose() {
+    controller?.dispose();
+    super.dispose();
   }
 
   @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('WOW TICKETS'),
+        centerTitle: true,
+        backgroundColor: primaryColor,
+        elevation: 0.0,
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: ElevatedButton(
+              child: const Text("Scan Bar Code"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (c) => const QRCodeScanScreen(),
+                  ),
+                );
+              },
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
