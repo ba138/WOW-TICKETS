@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 7));
     // ignore: use_build_context_synchronously
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => QRCodeScreen()));
+        context, MaterialPageRoute(builder: (context) => QrCodeScanScreen()));
   }
 
   Widget build(BuildContext context) {
