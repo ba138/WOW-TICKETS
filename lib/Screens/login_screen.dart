@@ -1,15 +1,149 @@
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+import 'package:wowtickets/Screens/register_screen.dart';
+import 'package:wowtickets/constants.dart';
+
+class LogInScreen extends StatefulWidget {
+  const LogInScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LogInScreen> createState() => _LogInScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LogInScreenState extends State<LogInScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool isLoading = false;
+  bool isSecure = false;
+  @override
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 40),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 30,
+                ),
+                // Container(
+                //   height: MediaQuery.of(context).size.height / 6.5,
+                //   width: MediaQuery.of(context).size.width / 3,
+                //   decoration: const BoxDecoration(
+                //       image: DecorationImage(
+                //           image: AssetImage('images/h m logo-01.png'),
+                //           fit: BoxFit.fill)),
+                // ),
+                Text(
+                  'WOW\nTICKETS',
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: primaryColor,
+                      fontFamily: "poppins"),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 10,
+                ),
+                TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  controller: _emailController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(),
+                    hintText: 'please enter your email',
+                    labelText: 'Email',
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height / 7 / 2,
+                  child: TextFormField(
+                    obscureText: isSecure,
+                    controller: _passwordController,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      focusedBorder: const OutlineInputBorder(),
+                      hintText: 'please enter your password',
+                      labelText: 'Password',
+                      suffix: IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                            isSecure ? Icons.visibility_off : Icons.visibility),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 8,
+                ),
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    height: 64,
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    decoration: BoxDecoration(
+                      color: primaryColor,
+                      border: Border.all(
+                        width: 1,
+                        color: primaryColor,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: isLoading
+                        ? const Text(
+                            'Wait',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          )
+                        : Center(
+                            child: Text(
+                              'Login',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "poppins",
+                                  color: backgroundColor),
+                            ),
+                          ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Don,t have Account?'),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (c) => const SignUpScreen(),
+                          ),
+                        );
+                      },
+                      child: isLoading
+                          ? const CircularProgressIndicator(color: Colors.black)
+                          : const Text(
+                              'SignUp',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

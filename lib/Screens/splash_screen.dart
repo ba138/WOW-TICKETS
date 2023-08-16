@@ -1,6 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:wowtickets/Screens/qrc_screen.dart';
+import 'package:wowtickets/Screens/login_screen.dart';
 import 'package:wowtickets/constants.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,10 +18,16 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void delay() async {
-    await Future.delayed(const Duration(seconds: 7));
+    await Future.delayed(
+      const Duration(seconds: 7),
+    );
     // ignore: use_build_context_synchronously
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => QrCodeScanScreen()));
+      context,
+      MaterialPageRoute(
+        builder: (context) => const LogInScreen(),
+      ),
+    );
   }
 
   Widget build(BuildContext context) {
