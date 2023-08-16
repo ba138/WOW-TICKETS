@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wowtickets/Screens/qrc_screen.dart';
 
 import 'package:wowtickets/Screens/register_screen.dart';
 import 'package:wowtickets/constants.dart';
@@ -83,7 +84,14 @@ class _LogInScreenState extends State<LogInScreen> {
                   height: MediaQuery.of(context).size.height / 8,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (c) => const QrCodeScanScreen(),
+                      ),
+                    );
+                  },
                   child: Container(
                     height: 64,
                     width: MediaQuery.of(context).size.width * 0.4,
