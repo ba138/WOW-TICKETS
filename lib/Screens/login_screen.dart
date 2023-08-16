@@ -95,22 +95,16 @@ class _LogInScreenState extends State<LogInScreen> {
                       ),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: isLoading
-                        ? const Text(
-                            'Wait',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          )
-                        : Center(
-                            child: Text(
-                              'Login',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "poppins",
-                                  color: backgroundColor),
-                            ),
-                          ),
+                    child: Center(
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "poppins",
+                            color: backgroundColor),
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -130,12 +124,10 @@ class _LogInScreenState extends State<LogInScreen> {
                           ),
                         );
                       },
-                      child: isLoading
-                          ? const CircularProgressIndicator(color: Colors.black)
-                          : const Text(
-                              'SignUp',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
+                      child: const Text(
+                        'SignUp',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     )
                   ],
                 )
