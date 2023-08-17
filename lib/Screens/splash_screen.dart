@@ -1,7 +1,11 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wowtickets/Screens/login_screen.dart';
+import 'package:wowtickets/Screens/qrc_screen.dart';
 import 'package:wowtickets/constants.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+
+import '../auth/auth_provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -18,16 +22,30 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void delay() async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    await authProvider.initAuthProvider();
+
     await Future.delayed(
-      const Duration(seconds: 7),
+      const Duration(seconds: 2),
     );
-    // ignore: use_build_context_synchronously
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const LogInScreen(),
-      ),
-    );
+
+    if (authProvider.isLoggedIn) {
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const QrCodeScanScreen(),
+        ),
+      );
+    } else {
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LogInScreen(),
+        ),
+      );
+    }
   }
 
   @override
