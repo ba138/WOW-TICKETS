@@ -1,8 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:wowtickets/Screens/home_screen.dart';
 import 'package:wowtickets/Screens/login_screen.dart';
-import 'package:wowtickets/Screens/qrc_screen.dart';
 import 'package:wowtickets/constants.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const QrCodeScanScreen(),
+          builder: (context) => const HomeScreen(),
         ),
       );
     } else {

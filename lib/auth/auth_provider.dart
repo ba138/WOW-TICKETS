@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:wowtickets/Screens/splash_screen.dart';
 import 'dart:convert';
 import 'package:wowtickets/auth/session_manager.dart';
 
@@ -32,8 +33,12 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<void> logout() async {
+  Future<void> logout(BuildContext context) async {
     _sessionManager.clearSession();
     notifyListeners();
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (c) => const SplashScreen()),
+        (route) => false);
   }
 }

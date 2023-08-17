@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wowtickets/Screens/qrc_screen.dart';
 
 import 'package:wowtickets/Screens/register_screen.dart';
 import 'package:wowtickets/auth/auth_provider.dart';
-import 'package:wowtickets/auth/auth_repository.dart';
 import 'package:wowtickets/constants.dart';
 
 class LogInScreen extends StatefulWidget {
@@ -21,6 +19,8 @@ class _LogInScreenState extends State<LogInScreen> {
   @override
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = AuthProvider();
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -87,17 +87,10 @@ class _LogInScreenState extends State<LogInScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    // AuthRepository authRepository = AuthRepository();
-                    AuthProvider authProvider = AuthProvider();
                     authProvider.login(
                       _emailController.text,
                       _passwordController.text,
                     );
-                    // authRepository.loginUser(
-                    //   _emailController.text,
-                    //   _passwordController.text,
-                    //   context,
-                    // );
                   },
                   child: Container(
                     height: 64,
