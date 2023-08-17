@@ -1,5 +1,6 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wowtickets/Screens/login_screen.dart';
 import 'package:wowtickets/Screens/qrc_screen.dart';
 import 'package:wowtickets/constants.dart';
@@ -22,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void delay() async {
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    AuthProvider authProvider = AuthProvider();
     await authProvider.initAuthProvider();
 
     await Future.delayed(
@@ -30,8 +31,8 @@ class _SplashScreenState extends State<SplashScreen> {
     );
 
     if (authProvider.isLoggedIn) {
-      debugPrint("stay loged in");
-      // ignore: use_build_context_synchronously
+      debugPrint("loged in user");
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -39,9 +40,6 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       );
     } else {
-      debugPrint("not stay loged in");
-
-      // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(

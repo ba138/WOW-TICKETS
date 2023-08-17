@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:wowtickets/auth/session_manager.dart';
 import 'dart:convert';
+import 'package:wowtickets/auth/session_manager.dart';
 
 class AuthProvider with ChangeNotifier {
   final SessionManager _sessionManager = SessionManager();
@@ -14,8 +14,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> login(String email, String password) async {
-    final url = Uri.parse(
-        'https://wow-tickets-app-staging.up.railway.app/api/users/signin?');
+    final url = Uri.parse('your_login_api_url_here');
 
     final response = await http.post(
       url,
