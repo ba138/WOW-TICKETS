@@ -28,6 +28,7 @@ class AuthProvider with ChangeNotifier {
 
     if (response.statusCode == 200) {
       final token = jsonDecode(response.body)['token'] as String;
+      debugPrint(token);
       _token = token;
       _isLoggedIn = true;
       await _saveTokenToPrefs(token);

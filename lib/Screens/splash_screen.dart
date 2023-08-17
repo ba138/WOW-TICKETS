@@ -30,6 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
     );
 
     if (authProvider.isLoggedIn) {
+      debugPrint("stay loged in");
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
         context,
@@ -38,11 +39,13 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       );
     } else {
+      debugPrint("not stay loged in");
+
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => LogInScreen(),
+          builder: (context) => const LogInScreen(),
         ),
       );
     }
