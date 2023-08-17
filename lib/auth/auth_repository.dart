@@ -7,8 +7,8 @@ import '../Screens/qrc_screen.dart';
 class AuthRepository {
   Future<void> loginUser(
       String email, String password, BuildContext context) async {
-    final url =
-        Uri.parse('https://wow-tickets-app-staging.up.railway.app/signin');
+    final url = Uri.parse(
+        'https://wow-tickets-app-staging.up.railway.app/api/users/signin?');
 
     final response = await http.post(
       url,
