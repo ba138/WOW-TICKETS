@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wowtickets/Screens/qrc_screen.dart';
 
 import 'package:wowtickets/Screens/register_screen.dart';
+import 'package:wowtickets/auth/auth_provider.dart';
 import 'package:wowtickets/auth/auth_repository.dart';
 import 'package:wowtickets/constants.dart';
 
@@ -86,12 +87,17 @@ class _LogInScreenState extends State<LogInScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    AuthRepository authRepository = AuthRepository();
-                    authRepository.loginUser(
+                    // AuthRepository authRepository = AuthRepository();
+                    AuthProvider authProvider = AuthProvider();
+                    authProvider.login(
                       _emailController.text,
                       _passwordController.text,
-                      context,
                     );
+                    // authRepository.loginUser(
+                    //   _emailController.text,
+                    //   _passwordController.text,
+                    //   context,
+                    // );
                   },
                   child: Container(
                     height: 64,
