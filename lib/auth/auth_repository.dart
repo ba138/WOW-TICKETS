@@ -1,8 +1,12 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../Screens/qrc_screen.dart';
+
 class AuthRepository {
-  Future<void> loginUser(String email, String password) async {
+  Future<void> loginUser(
+      String email, String password, BuildContext context) async {
     final url =
         Uri.parse('https://wow-tickets-app-staging.up.railway.app/signin');
 
@@ -14,12 +18,19 @@ class AuthRepository {
 
     if (response.statusCode == 200) {
       // Successful login
-      print('Login successful');
-      print('Response: ${response.body}');
+      debugPrint('Login successful');
+      debugPrint('Response: ${response.body}');
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (c) => const QrCodeScanScreen(),
+        ),
+      );
     } else {
       // Login failed
-      print('Login failed');
-      print('Response: ${response.body}');
+      debugPrint('Login failed');
+      debugPrint('Response: ${response.body}');
     }
   }
 }

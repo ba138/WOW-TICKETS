@@ -90,12 +90,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     authRepository.loginUser(
                       _emailController.text,
                       _passwordController.text,
-                    );
-                    Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (c) => const QrCodeScanScreen(),
-                      ),
                     );
                   },
                   child: Container(
