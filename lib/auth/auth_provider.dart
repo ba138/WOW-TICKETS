@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:wowtickets/auth/session_manager.dart';
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider with ChangeNotifier {
-  String? _token;
-  bool _isLoggedIn = false;
+  final SessionManager _sessionManager = SessionManager();
 
-  bool get isLoggedIn => _isLoggedIn;
+  bool get isLoggedIn => _sessionManager.getToken() != null;
 
   Future<void> initAuthProvider() async {
-    final prefs = await SharedPreferences.getInstance();
-    _token = prefs.getString('token');
-    _isLoggedIn = _token != null;
+    await _sessionManager.init();
     notifyListeners();
   }
 
@@ -28,26 +25,15 @@ class AuthProvider with ChangeNotifier {
 
     if (response.statusCode == 200) {
       final token = jsonDecode(response.body)['token'] as String;
-      debugPrint(token);
-      _token = token;
-      _isLoggedIn = true;
-      await _saveTokenToPrefs(token);
+      _sessionManager.saveToken(token);
       notifyListeners();
     } else {
       throw Exception('Login failed');
     }
   }
 
-  Future<void> _saveTokenToPrefs(String token) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('token', token);
-  }
-
   Future<void> logout() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.remove('token');
-    _token = null;
-    _isLoggedIn = false;
+    _sessionManager.clearSession();
     notifyListeners();
   }
 }
