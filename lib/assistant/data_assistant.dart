@@ -5,9 +5,9 @@ import 'package:sqflite/sqflite.dart';
 import 'package:http/http.dart' as http;
 
 class DataAssistant {
-  Future<void> fetchDataAndStore() async {
+  Future<void> fetchDataAndStore(String sellerID) async {
     final url = Uri.parse(
-        'https://wow-tickets-app-staging.up.railway.app/api/users/signin?');
+        'https://wow-tickets-app-staging.up.railway.app/api/orders/sales?seller_id=$sellerID');
     final response = await http.get(
       url,
     );
@@ -15,9 +15,12 @@ class DataAssistant {
       final jsonData = json.decode(response.body);
 
       final databasesPath = await getDatabasesPath();
-      final path = join(databasesPath, 'your_database_name.db');
+      final path = join(
+        databasesPath,
+        'WOWOTICKETSSCANN',
+      );
 
-      final db = await openDatabase(path); // Pass the path as an argument
+      final db = await openDatabase(path);
       await db.insert('Events', jsonData);
     }
   }
