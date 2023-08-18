@@ -29,6 +29,7 @@ class AuthProvider with ChangeNotifier {
     );
     bool isSeller = jsonDecode(response.body)["isSeller"];
     sellerID = jsonDecode(response.body)["_id"] as String;
+    debugPrint("sellerID");
     if (response.statusCode == 200 && isSeller == true) {
       final responseData = json.decode(response.body);
       debugPrint(
