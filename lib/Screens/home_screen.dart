@@ -87,7 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text(
                             "Import",
                             style: TextStyle(
-                                fontFamily: "Poppins", color: Colors.white),
+                              fontFamily: "Poppins",
+                              color: Colors.white,
+                            ),
                           )
                         ]),
                   ),
@@ -127,7 +129,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text(
                             "Sync",
                             style: TextStyle(
-                                fontFamily: "Poppins", color: Colors.white),
+                              fontFamily: "Poppins",
+                              color: Colors.white,
+                            ),
                           )
                         ]),
                   ),
