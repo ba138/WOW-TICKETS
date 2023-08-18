@@ -19,34 +19,38 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   void insertDataFromJsonResponse(String jsonResponse) async {
-    List<Map<String, dynamic>> orderList = jsonDecode(jsonResponse);
+    try {
+      List<Map<String, dynamic>> orderList = jsonDecode(jsonResponse);
 
-    DatabaseHelper dbHelper = DatabaseHelper();
-    await dbHelper.initDatabase();
+      DatabaseHelper dbHelper = DatabaseHelper();
+      await dbHelper.initDatabase();
 
-    for (var orderMap in orderList) {
-      Order order = Order(
-        id: orderMap['_id'],
-        purchasedTickets: [],
-      );
-
-      List<dynamic> ticketList = orderMap['purchasedTickets'];
-      for (var ticketMap in ticketList) {
-        Ticket ticket = Ticket(
-          id: ticketMap['_id'],
-          user: ticketMap['user'],
-          status: ticketMap['status'],
+      for (var orderMap in orderList) {
+        Order order = Order(
+          id: orderMap['_id'],
+          purchasedTickets: [],
         );
-        order.purchasedTickets.add(ticket);
+
+        List<dynamic> ticketList = orderMap['purchasedTickets'];
+        for (var ticketMap in ticketList) {
+          Ticket ticket = Ticket(
+            id: ticketMap['_id'],
+            user: ticketMap['user'],
+            status: ticketMap['status'],
+          );
+          order.purchasedTickets.add(ticket);
+        }
+
+        await dbHelper.insertOrder(order);
+        for (var ticket in order.purchasedTickets) {
+          await dbHelper.insertTicket(ticket, order.id);
+        }
       }
 
-      await dbHelper.insertOrder(order);
-      for (var ticket in order.purchasedTickets) {
-        await dbHelper.insertTicket(ticket, order.id);
-      }
+      debugPrint('Data inserted successfully');
+    } catch (e) {
+      debugPrint("this is function number 4 : $e");
     }
-
-    debugPrint('Data inserted successfully');
   }
 
   @override
