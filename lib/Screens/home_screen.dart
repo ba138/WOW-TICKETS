@@ -19,7 +19,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  void insertDataFromJsonResponse(String jsonResponse) async {
+  void insertDataFromJsonResponse() async {
     try {
       final url = Uri.parse(
           'https://wow-tickets-app-staging.up.railway.app/api/orders/sales?seller_id=$sellerID');
@@ -118,9 +118,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   debugPrint(
                     "This is sellerID = $sellerID",
                   );
-                  String jsonResponse =
-                      'https://wow-tickets-app-staging.up.railway.app/api/orders/sales?seller_id=$sellerID';
-                  insertDataFromJsonResponse(jsonResponse);
+
+                  insertDataFromJsonResponse();
                 },
                 child: Container(
                   width: (MediaQuery.of(context).size.width / 4),

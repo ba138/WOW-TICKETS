@@ -10,7 +10,7 @@ class DatabaseHelper {
   Future<void> initDatabase() async {
     try {
       _database = await openDatabase(
-        join(await getDatabasesPath(), 'your_database.db'),
+        join(await getDatabasesPath(), 'WOWTickets'),
         onCreate: (db, version) async {
           await db.execute('''
           CREATE TABLE orders(
