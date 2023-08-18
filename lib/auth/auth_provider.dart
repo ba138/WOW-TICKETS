@@ -36,6 +36,7 @@ class AuthProvider with ChangeNotifier {
       notifyListeners();
       DataAssistant dataAssistant = DataAssistant();
       dataAssistant.fetchDataAndStore(sellerID!);
+      debugPrint("data has been fetch and store");
       // ignore: use_build_context_synchronously
       Navigator.pushAndRemoveUntil(
           context,
