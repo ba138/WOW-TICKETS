@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:wowtickets/Screens/home_screen.dart';
 import 'package:wowtickets/Screens/splash_screen.dart';
@@ -25,8 +26,8 @@ class AuthProvider with ChangeNotifier {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'email': email, 'password': password}),
     );
-    final isSeller = jsonDecode(response.body)["isSeller"] as String;
-    if (response.statusCode == 200 && isSeller == "true") {
+    bool isSeller = jsonDecode(response.body)["isSeller"];
+    if (response.statusCode == 200 && isSeller == true) {
       final token = jsonDecode(response.body)['token'] as String;
       _sessionManager.saveToken(token);
       notifyListeners();
@@ -36,7 +37,7 @@ class AuthProvider with ChangeNotifier {
           MaterialPageRoute(builder: (c) => const HomeScreen()),
           (route) => false);
     } else {
-      throw Exception('Login failed');
+      Fluttertoast.showToast(msg: "Unable to Login");
     }
   }
 
