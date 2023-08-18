@@ -16,7 +16,9 @@ class DataAssistant {
       );
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body);
-
+        debugPrint(
+          'Response Body: $jsonData',
+        );
         final databasesPath = await getDatabasesPath();
         final path = join(
           databasesPath,
