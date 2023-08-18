@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:wowtickets/Screens/home_screen.dart';
 import 'package:wowtickets/Screens/splash_screen.dart';
 import 'dart:convert';
 import 'package:wowtickets/auth/session_manager.dart';
@@ -14,7 +15,8 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> login(String email, String password) async {
+  Future<void> login(
+      String email, String password, BuildContext context) async {
     final url = Uri.parse(
         'https://wow-tickets-app-staging.up.railway.app/api/users/signin?');
 
@@ -23,11 +25,16 @@ class AuthProvider with ChangeNotifier {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'email': email, 'password': password}),
     );
-
-    if (response.statusCode == 200) {
+    final isSeller = jsonDecode(response.body)["isSeller"] as String;
+    if (response.statusCode == 200 && isSeller == "true") {
       final token = jsonDecode(response.body)['token'] as String;
       _sessionManager.saveToken(token);
       notifyListeners();
+      // ignore: use_build_context_synchronously
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (c) => const HomeScreen()),
+          (route) => false);
     } else {
       throw Exception('Login failed');
     }

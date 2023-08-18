@@ -90,6 +90,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     authProvider.login(
                       _emailController.text,
                       _passwordController.text,
+                      context,
                     );
                   },
                   child: Container(
