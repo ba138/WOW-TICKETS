@@ -5,6 +5,7 @@ import 'package:wowtickets/Screens/home_screen.dart';
 import 'package:wowtickets/Screens/splash_screen.dart';
 import 'dart:convert';
 import 'package:wowtickets/auth/session_manager.dart';
+import 'package:wowtickets/constants.dart';
 
 class AuthProvider with ChangeNotifier {
   final SessionManager _sessionManager = SessionManager();
@@ -27,6 +28,7 @@ class AuthProvider with ChangeNotifier {
       body: jsonEncode({'email': email, 'password': password}),
     );
     bool isSeller = jsonDecode(response.body)["isSeller"];
+    sellerID = jsonDecode(response.body)["id"];
     if (response.statusCode == 200 && isSeller == true) {
       final token = jsonDecode(response.body)['token'] as String;
       _sessionManager.saveToken(token);

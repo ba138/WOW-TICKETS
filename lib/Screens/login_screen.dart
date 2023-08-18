@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:wowtickets/Screens/register_screen.dart';
 import 'package:wowtickets/auth/auth_provider.dart';
@@ -32,22 +33,19 @@ class _LogInScreenState extends State<LogInScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-                // Container(
-                //   height: MediaQuery.of(context).size.height / 6.5,
-                //   width: MediaQuery.of(context).size.width / 3,
-                //   decoration: const BoxDecoration(
-                //       image: DecorationImage(
-                //           image: AssetImage('images/h m logo-01.png'),
-                //           fit: BoxFit.fill)),
-                // ),
-                Text(
-                  'WOW\nTICKETS',
-                  style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: primaryColor,
-                      fontFamily: "poppins"),
+                SvgPicture.asset(
+                  'images/logo.svg',
+                  color: primaryColor,
+                  height: 80,
                 ),
+                // Text(
+                //   'WOW\nTICKETS',
+                //   style: TextStyle(
+                //       fontSize: 24,
+                //       fontWeight: FontWeight.bold,
+                //       color: primaryColor,
+                //       fontFamily: "poppins"),
+                // ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 10,
                 ),
