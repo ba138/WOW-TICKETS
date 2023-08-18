@@ -63,6 +63,86 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               GestureDetector(
                 onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (c) => const QrCodeScanScreen(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: (MediaQuery.of(context).size.width / 4),
+                  height: (MediaQuery.of(context).size.width / 4),
+                  child: Card(
+                    color: primaryColor,
+                    child: const Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.download,
+                            size: 60,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            "Import",
+                            style: TextStyle(
+                                fontFamily: "Poppins", color: Colors.white),
+                          )
+                        ]),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (c) => const QrCodeScanScreen(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: (MediaQuery.of(context).size.width / 4),
+                  height: (MediaQuery.of(context).size.width / 4),
+                  child: Card(
+                    color: primaryColor,
+                    child: const Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.import_export_outlined,
+                            size: 60,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            "Sync",
+                            style: TextStyle(
+                                fontFamily: "Poppins", color: Colors.white),
+                          )
+                        ]),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {
                   AuthProvider authProvider = AuthProvider();
                   authProvider.logout(context);
                 },
