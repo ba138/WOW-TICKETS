@@ -28,8 +28,12 @@ class AuthProvider with ChangeNotifier {
       body: jsonEncode({'email': email, 'password': password}),
     );
     bool isSeller = jsonDecode(response.body)["isSeller"];
-    sellerID = jsonDecode(response.body)["id"];
+    sellerID = jsonDecode(response.body)["_id"] as String;
     if (response.statusCode == 200 && isSeller == true) {
+      final responseData = json.decode(response.body);
+      debugPrint(
+        'Response Body: $responseData',
+      );
       final token = jsonDecode(response.body)['token'] as String;
       _sessionManager.saveToken(token);
       notifyListeners();
