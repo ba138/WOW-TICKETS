@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wowtickets/Screens/qrc_screen.dart';
+import 'package:wowtickets/assistant/data_assistant.dart';
 import 'package:wowtickets/auth/auth_provider.dart';
 import 'package:wowtickets/constants.dart';
 
@@ -63,11 +64,12 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (c) => const QrCodeScanScreen(),
-                    ),
+                  debugPrint(
+                    "This is sellerID = $sellerID",
+                  );
+                  DataAssistant dataAssistant = DataAssistant();
+                  dataAssistant.fetchDataAndStore(
+                    sellerID!,
                   );
                 },
                 child: Container(
@@ -104,14 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (c) => const QrCodeScanScreen(),
-                    ),
-                  );
-                },
+                onTap: () {},
                 child: Container(
                   width: (MediaQuery.of(context).size.width / 4),
                   height: (MediaQuery.of(context).size.width / 4),

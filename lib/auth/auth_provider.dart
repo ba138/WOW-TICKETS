@@ -3,7 +3,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:wowtickets/Screens/home_screen.dart';
 import 'package:wowtickets/Screens/splash_screen.dart';
-import 'package:wowtickets/assistant/data_assistant.dart';
 import 'dart:convert';
 import 'package:wowtickets/auth/session_manager.dart';
 import 'package:wowtickets/constants.dart';
@@ -34,9 +33,7 @@ class AuthProvider with ChangeNotifier {
       final token = jsonDecode(response.body)['token'] as String;
       _sessionManager.saveToken(token);
       notifyListeners();
-      // DataAssistant dataAssistant = DataAssistant();
-      // dataAssistant.fetchDataAndStore(sellerID!);
-      // debugPrint("data has been fetch and store");
+
       // ignore: use_build_context_synchronously
       Navigator.pushAndRemoveUntil(
           context,

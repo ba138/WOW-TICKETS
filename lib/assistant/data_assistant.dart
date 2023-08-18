@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -24,6 +25,9 @@ class DataAssistant {
 
         final db = await openDatabase(path);
         await db.insert('Events', jsonData);
+        Fluttertoast.showToast(
+          msg: "your data has been added",
+        );
       }
     } catch (e) {
       debugPrint(
