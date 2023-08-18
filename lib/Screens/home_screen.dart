@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wowtickets/Screens/qrc_screen.dart';
 // import 'package:wowtickets/assistant/data_assistant.dart';
 import 'package:wowtickets/auth/auth_provider.dart';
 import 'package:wowtickets/constants.dart';
-
+import 'package:http/http.dart' as http;
 import '../Database_Helper/database_helper.dart';
 import '../assistant/Models/order_Model.dart';
 import '../assistant/Models/tickets_model.dart';
@@ -20,7 +21,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   void insertDataFromJsonResponse(String jsonResponse) async {
     try {
-      List<Map<String, dynamic>> orderList = jsonDecode(jsonResponse);
+      final url = Uri.parse(
+          'https://wow-tickets-app-staging.up.railway.app/api/orders/sales?seller_id=$sellerID');
+
+      final respone = await http.get(url);
+      debugPrint(respone.body);
+      List<Map<String, dynamic>> orderList = List<Map<String, dynamic>>.from(
+        jsonDecode(respone.body),
+      );
 
       DatabaseHelper dbHelper = DatabaseHelper();
       await dbHelper.initDatabase();
@@ -47,7 +55,9 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       }
 
-      debugPrint('Data inserted successfully');
+      Fluttertoast.showToast(
+        msg: "data has been import",
+      );
     } catch (e) {
       debugPrint("this is function number 4 : $e");
     }
