@@ -38,14 +38,6 @@ class _LogInScreenState extends State<LogInScreen> {
                   color: primaryColor,
                   height: 80,
                 ),
-                // Text(
-                //   'WOW\nTICKETS',
-                //   style: TextStyle(
-                //       fontSize: 24,
-                //       fontWeight: FontWeight.bold,
-                //       color: primaryColor,
-                //       fontFamily: "poppins"),
-                // ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 10,
                 ),
