@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:wowtickets/Screens/data_screen.dart';
 import 'package:wowtickets/Screens/qrc_screen.dart';
 // import 'package:wowtickets/assistant/data_assistant.dart';
 import 'package:wowtickets/auth/auth_provider.dart';
@@ -155,7 +156,14 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (c) => DataScreen(),
+                    ),
+                  );
+                },
                 child: Container(
                   width: (MediaQuery.of(context).size.width / 4),
                   height: (MediaQuery.of(context).size.width / 4),
