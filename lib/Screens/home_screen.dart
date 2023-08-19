@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:wowtickets/Database_Helper/database_data.dart';
 import 'package:wowtickets/Screens/data_screen.dart';
 import 'package:wowtickets/Screens/qrc_screen.dart';
 // import 'package:wowtickets/assistant/data_assistant.dart';
@@ -66,6 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = AuthProvider();
     return Scaffold(
       body: SafeArea(
           child: Column(
@@ -157,12 +159,13 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (c) => DataScreen(),
-                    ),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (c) => DataScreen(),
+                  //   ),
+                  // );
+                  authProvider.sendTicketsToAPI();
                 },
                 child: Container(
                   width: (MediaQuery.of(context).size.width / 4),
@@ -199,7 +202,6 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               GestureDetector(
                 onTap: () {
-                  AuthProvider authProvider = AuthProvider();
                   authProvider.logout(context);
                 },
                 child: Container(
