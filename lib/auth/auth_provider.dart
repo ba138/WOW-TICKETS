@@ -36,7 +36,9 @@ class AuthProvider with ChangeNotifier {
         'Response Body: $responseData',
       );
       final token = jsonDecode(response.body)['token'] as String;
-      _sessionManager.saveToken(token);
+      _sessionManager.saveToken(
+        token,
+      );
       notifyListeners();
 
       // ignore: use_build_context_synchronously
