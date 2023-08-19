@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:wowtickets/Database_Helper/database_data.dart';
+import 'package:wowtickets/Database_Helper/database_helper.dart';
 import 'package:wowtickets/Screens/home_screen.dart';
 import 'package:wowtickets/Screens/splash_screen.dart';
 import 'dart:convert';
 import 'package:wowtickets/auth/session_manager.dart';
 import 'package:wowtickets/constants.dart';
+
+import '../assistant/Models/tickets_model.dart';
 
 class AuthProvider with ChangeNotifier {
   final SessionManager _sessionManager = SessionManager();
@@ -59,4 +63,57 @@ class AuthProvider with ChangeNotifier {
         MaterialPageRoute(builder: (c) => const SplashScreen()),
         (route) => false);
   }
+
+  Future<void> sendTicketsToAPI() async {
+    DatabaseData databaseHelper = DatabaseData();
+    List<Ticket> tickets = await databaseHelper.getTickets();
+    List<Map<String, dynamic>> ticketsData = tickets.map((ticket) {
+      return {
+        'id': ticket.id,
+        'status': ticket.status ? 1 : 0,
+      };
+    }).toList();
+
+    final url = Uri.parse(
+        'https://wow-tickets-app-staging.up.railway.app/api/purchasedTickets/status');
+
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(
+        {'ticketData': ticketsData},
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      Fluttertoast.showToast(msg: "Data has been sync");
+    } else {
+      Fluttertoast.showToast(msg: "problem with sync");
+    }
+  }
+
+  // Future<void> sendTicketsToAPI() async {
+  //   DatabaseData databaseHelper = DatabaseData();
+  //   List<Ticket> tickets = await databaseHelper.getTickets();
+  //   List<Map<String, dynamic>> ticketsData = tickets.map((ticket) {
+  //     return {
+  //       'id': ticket.id,
+  //       'status': ticket.status ? 1 : 0,
+  //     };
+  //   }).toList();
+
+  //   final url = Uri.parse('YOUR_API_ENDPOINT_URL');
+
+  //   final response = await http.post(
+  //     url,
+  //     headers: {'Content-Type': 'application/json'},
+  //     body: jsonEncode({'tickets': ticketsData}),
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     // Success, do something
+  //   } else {
+  //     // Handle error
+  //   }
+  // }
 }
