@@ -68,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = AuthProvider();
+    DatabaseData dbData = DatabaseData();
     return Scaffold(
       body: SafeArea(
           child: Column(
@@ -159,13 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (c) => DataScreen(),
-                  //   ),
-                  // );
-                  authProvider.sendTicketsToAPI();
+                  dbData.sendTicketsToAPI();
                 },
                 child: Container(
                   width: (MediaQuery.of(context).size.width / 4),
