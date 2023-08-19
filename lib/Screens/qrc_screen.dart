@@ -5,14 +5,14 @@
 // import 'package:qr_code_scanner/qr_code_scanner.dart';
 // import 'package:wowtickets/Database_Helper/database_update.dart';
 
-// class QrCodeScanScreen extends StatefulWidget {
-//   const QrCodeScanScreen({super.key});
+// class QRScanScreen extends StatefulWidget {
+//   const QRScanScreen({super.key});
 
 //   @override
-//   State<QrCodeScanScreen> createState() => _QrCodeScanScreenState();
+//   State<QRScanScreen> createState() => _QRScanScreenState();
 // }
 
-// class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
+// class _QRScanScreenState extends State<QRScanScreen> {
 //   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 //   DatabaseUpdater dbHelper = DatabaseUpdater();
 //   bool scanning = false;
@@ -70,12 +70,13 @@
 //     );
 //   }
 // }
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:wowtickets/Database_Helper/database_update.dart';
-
-import '../assistant/Models/tickets_model.dart';
+import 'package:wowtickets/assistant/Models/compare_model.dart';
 
 class QRScanScreen extends StatefulWidget {
   @override
@@ -83,14 +84,42 @@ class QRScanScreen extends StatefulWidget {
 }
 
 class _QRScanScreenState extends State<QRScanScreen> {
-  late DatabaseUpdater dbHelper;
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   late QRViewController controller;
-  bool scanning = false;
+  void _onQRViewCreated(QRViewController controller) {
+    this.controller = controller;
+    controller.scannedDataStream.listen(_processScannedQRCode);
+  }
 
-  @override
-  void initState() {
-    super.initState();
-    dbHelper = DatabaseUpdater();
+  void _processScannedQRCode(Barcode scannedBarcode) async {
+    try {
+      String scannedQRData = scannedBarcode.code!;
+      Map<String, dynamic> qrData = jsonDecode(scannedQRData);
+      String purchaseId = qrData['purchase'];
+      bool newStatus = false;
+
+      DatabaseUpdater dbHelper = DatabaseUpdater();
+      await dbHelper.initDatabase();
+
+      Compare? ticket = await dbHelper.getTicketByPurchaseId(purchaseId);
+
+      if (ticket != null) {
+        if (ticket.status != newStatus) {
+          await dbHelper.updateTicketStatus(ticket.id, newStatus);
+
+          String message = 'Ticket ID: ${ticket.id} - Status updated';
+          Fluttertoast.showToast(msg: message);
+        } else {
+          String message =
+              'Ticket ID: ${ticket.id} - Status already up to date';
+          Fluttertoast.showToast(msg: message);
+        }
+      } else {
+        Fluttertoast.showToast(msg: 'Ticket not found');
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: 'Invalid QR Code');
+    }
   }
 
   @override
@@ -99,48 +128,11 @@ class _QRScanScreenState extends State<QRScanScreen> {
     super.dispose();
   }
 
-  void _onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      if (!scanning) {
-        setState(() {
-          scanning = true;
-        });
-        processScannedQRCode(scanData.code!);
-      }
-    });
-  }
-
-  Future<void> processScannedQRCode(String scannedTicketId) async {
-    await dbHelper.initDatabase();
-    debugPrint("this is scannedTicketID: $scannedTicketId ");
-
-    Ticket? ticket = await dbHelper.getTicketById(scannedTicketId);
-
-    if (ticket != null) {
-      bool newStatus = !ticket.status;
-      await dbHelper.updateTicketStatus(scannedTicketId, newStatus);
-
-      String message =
-          newStatus ? 'Ticket marked as used' : 'Ticket status reverted';
-      Fluttertoast.showToast(msg: message);
-    } else {
-      Fluttertoast.showToast(msg: 'Ticket not found');
-    }
-
-    setState(() {
-      scanning = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('QR Code Scanner'),
-      ),
       body: QRView(
-        key: GlobalKey(debugLabel: 'QR'),
+        key: qrKey,
         onQRViewCreated: _onQRViewCreated,
       ),
     );
