@@ -1,75 +1,5 @@
-// import 'dart:io';
+// ignore_for_file: use_build_context_synchronously
 
-// import 'package:flutter/foundation.dart';
-// import 'package:flutter/material.dart';
-// import 'package:qr_code_scanner/qr_code_scanner.dart';
-// import 'package:wowtickets/Database_Helper/database_update.dart';
-
-// class QRScanScreen extends StatefulWidget {
-//   const QRScanScreen({super.key});
-
-//   @override
-//   State<QRScanScreen> createState() => _QRScanScreenState();
-// }
-
-// class _QRScanScreenState extends State<QRScanScreen> {
-//   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-//   DatabaseUpdater dbHelper = DatabaseUpdater();
-//   bool scanning = false;
-//   String scannedTicketId = '';
-
-//   Barcode? result;
-//   QRViewController? controller;
-
-//   void reassemble() {
-//     super.reassemble();
-//     if (Platform.isAndroid) {
-//       controller!.pauseCamera();
-//     } else if (Platform.isIOS) {
-//       controller!.resumeCamera();
-//     }
-//   }
-
-//   void _onQRViewCreated(QRViewController controller) {
-//     this.controller = controller;
-//     controller.scannedDataStream.listen((scanData) {
-//       setState(() {
-//         result = scanData;
-//       });
-//     });
-//   }
-
-//   void dispose() {
-//     controller?.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Column(
-//         children: <Widget>[
-//           Expanded(
-//             flex: 5,
-//             child: QRView(
-//               key: qrKey,
-//               onQRViewCreated: _onQRViewCreated,
-//             ),
-//           ),
-//           Expanded(
-//             flex: 1,
-//             child: Center(
-//               child: (result != null)
-//                   ? Text(
-//                       'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
-//                   : const Text('Scan a code'),
-//             ),
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -109,16 +39,20 @@ class _QRScanScreenState extends State<QRScanScreen> {
 
           String message = 'Ticket ID: ${ticket.id} - Status updated';
           Fluttertoast.showToast(msg: message);
+          Navigator.pop(context);
         } else {
           String message =
               'Ticket ID: ${ticket.id} - Status already up to date';
           Fluttertoast.showToast(msg: message);
+          Navigator.pop(context);
         }
       } else {
         Fluttertoast.showToast(msg: 'Ticket not found');
+        Navigator.pop(context);
       }
     } catch (e) {
       Fluttertoast.showToast(msg: 'Invalid QR Code');
+      Navigator.pop(context);
     }
   }
 

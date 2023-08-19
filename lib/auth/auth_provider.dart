@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'package:wowtickets/Database_Helper/database_data.dart';
 import 'package:wowtickets/Screens/home_screen.dart';
 import 'package:wowtickets/Screens/splash_screen.dart';
 import 'dart:convert';
 import 'package:wowtickets/auth/session_manager.dart';
 import 'package:wowtickets/constants.dart';
-
-import '../assistant/Models/tickets_model.dart';
 
 class AuthProvider with ChangeNotifier {
   final SessionManager _sessionManager = SessionManager();

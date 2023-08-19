@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:wowtickets/Database_Helper/database_data.dart';
 import '../assistant/Models/order_Model.dart';
 import '../assistant/Models/tickets_model.dart';
 
@@ -63,5 +64,19 @@ class DatabaseHelper {
     } catch (e) {
       debugPrint("this is function number 3:$e ");
     }
+  }
+
+  Future<List<Ticket>> getTickets() async {
+    DatabaseData dbData = DatabaseData();
+    final Database db = await dbData.getDatabase();
+    final List<Map<String, dynamic>> maps = await db.query('tickets');
+
+    return List.generate(maps.length, (i) {
+      return Ticket(
+        id: maps[i]['id'],
+        user: maps[i]['user'],
+        status: maps[i]['status'] == 1,
+      );
+    });
   }
 }
