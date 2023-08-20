@@ -55,4 +55,16 @@ class DatabaseUpdater {
       debugPrint("Error updating ticket status: $e");
     }
   }
+
+  Future<void> storePurchaseId(String purchaseId) async {
+    try {
+      await _database.insert(
+        'change status ids', // Replace with the actual table name
+        {'id': purchaseId},
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    } catch (e) {
+      debugPrint("Error storing purchase ID: $e");
+    }
+  }
 }
