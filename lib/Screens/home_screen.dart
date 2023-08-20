@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:wowtickets/Database_Helper/database_data.dart';
+import 'package:wowtickets/Database_Helper/database_update.dart';
 import 'package:wowtickets/Screens/qrc_screen.dart';
 import 'package:wowtickets/auth/auth_provider.dart';
 import 'package:wowtickets/constants.dart';
@@ -78,7 +79,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = AuthProvider();
-    DatabaseData dbData = DatabaseData();
     return Scaffold(
       body: SafeArea(
           child: Padding(
@@ -180,8 +180,10 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () {
-                    dbData.performPatchAction();
+                  onTap: () async {
+                    final dbUpdater = DatabaseUpdater();
+                    await dbUpdater.initDatabase();
+                    dbUpdater.performPatchAction();
                   },
                   child: Container(
                     width: (MediaQuery.of(context).size.width / 2.5),
