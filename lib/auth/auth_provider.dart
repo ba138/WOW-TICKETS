@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -39,18 +37,17 @@ class AuthProvider with ChangeNotifier {
     Navigator.pop(context);
     bool isSeller = jsonDecode(response.body)["isSeller"];
     sellerID = jsonDecode(response.body)["_id"] as String;
-    debugPrint("sellerID");
+
     if (response.statusCode == 200 && isSeller == true) {
       final responseData = json.decode(response.body);
-      debugPrint(
-        'Response Body: $responseData',
-      );
       final token = jsonDecode(response.body)['token'] as String;
-      _sessionManager.saveToken(
-        token,
-      );
+
+      _sessionManager.saveToken(token);
+      _sessionManager.saveSellerID(sellerID);
+
       notifyListeners();
 
+      // ignore: use_build_context_synchronously
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (c) => const HomeScreen()),
