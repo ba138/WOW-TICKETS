@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wowtickets/Database_Helper/database_data.dart';
 import 'package:wowtickets/Screens/qrc_screen.dart';
@@ -10,6 +13,7 @@ import 'package:http/http.dart' as http;
 import '../Database_Helper/database_helper.dart';
 import '../assistant/Models/order_Model.dart';
 import '../assistant/Models/tickets_model.dart';
+import '../utills/utills.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,6 +27,11 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       final url = Uri.parse(
           'https://wow-tickets-app-staging.up.railway.app/api/orders/sales?seller_id=$sellerID');
+      showDialog(
+        context: context,
+        builder: (BuildContext context) =>
+            PrograssDialog(message: "Importing please wait..."),
+      );
 
       final respone = await http.get(url);
       debugPrint(respone.body);
@@ -54,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
           await dbHelper.insertTicket(ticket, order.id);
         }
       }
+      Navigator.pop(context);
 
       Fluttertoast.showToast(
         msg: "data has been import",
@@ -69,103 +79,111 @@ class _HomeScreenState extends State<HomeScreen> {
     DatabaseData dbData = DatabaseData();
     return Scaffold(
       body: SafeArea(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (c) => QRScanScreen(),
-                    ),
-                  );
-                },
-                child: Container(
-                  width: (MediaQuery.of(context).size.width / 4),
-                  height: (MediaQuery.of(context).size.width / 4),
-                  child: Card(
-                    color: primaryColor,
-                    child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.qr_code_scanner,
-                            size: 60,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            "Scann",
-                            style: TextStyle(
-                                fontFamily: "Poppins", color: Colors.white),
-                          )
-                        ]),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  debugPrint(
-                    "This is sellerID = $sellerID",
-                  );
-
-                  insertDataFromJsonResponse();
-                },
-                child: Container(
-                  width: (MediaQuery.of(context).size.width / 4),
-                  height: (MediaQuery.of(context).size.width / 4),
-                  child: Card(
-                    color: primaryColor,
-                    child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.download,
-                            size: 60,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            "Import",
-                            style: TextStyle(
-                              fontFamily: "Poppins",
+          child: Padding(
+        padding: const EdgeInsets.only(
+          left: 12,
+          right: 12,
+          top: 40,
+        ),
+        child: Column(
+          children: [
+            SvgPicture.asset(
+              'images/logo.svg',
+              color: primaryColor,
+              height: 120,
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (c) => QRScanScreen(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: (MediaQuery.of(context).size.width / 2.5),
+                    height: (MediaQuery.of(context).size.width / 2.5),
+                    child: Card(
+                      color: primaryColor,
+                      child: const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.qr_code_scanner,
+                              size: 60,
                               color: Colors.white,
                             ),
-                          )
-                        ]),
+                            Text(
+                              "Scann",
+                              style: TextStyle(
+                                  fontFamily: "Poppins", color: Colors.white),
+                            )
+                          ]),
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  dbData.sendTicketsToAPI();
-                },
-                child: Container(
-                  width: (MediaQuery.of(context).size.width / 4),
-                  height: (MediaQuery.of(context).size.width / 4),
-                  child: Card(
-                    color: primaryColor,
-                    child: const Column(
+                const SizedBox(
+                  width: 20,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    debugPrint(
+                      "This is sellerID = $sellerID",
+                    );
+
+                    insertDataFromJsonResponse();
+                  },
+                  child: Container(
+                    width: (MediaQuery.of(context).size.width / 2.5),
+                    height: (MediaQuery.of(context).size.width / 2.5),
+                    child: Card(
+                      color: primaryColor,
+                      child: const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.download,
+                              size: 60,
+                              color: Colors.white,
+                            ),
+                            Text(
+                              "Import",
+                              style: TextStyle(
+                                fontFamily: "Poppins",
+                                color: Colors.white,
+                              ),
+                            )
+                          ]),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    dbData.sendTicketsToAPI(context);
+                  },
+                  child: Container(
+                    width: (MediaQuery.of(context).size.width / 2.5),
+                    height: (MediaQuery.of(context).size.width / 2.5),
+                    child: Card(
+                      color: primaryColor,
+                      child: const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -181,48 +199,48 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: Colors.white,
                             ),
                           )
-                        ]),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  authProvider.logout(context);
-                },
-                child: Container(
-                  width: (MediaQuery.of(context).size.width / 4),
-                  height: (MediaQuery.of(context).size.width / 4),
-                  child: Card(
-                    color: primaryColor,
-                    child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.logout_rounded,
-                            size: 60,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            "Logout",
-                            style: TextStyle(
-                                fontFamily: "Poppins", color: Colors.white),
-                          )
-                        ]),
-                  ),
+                const SizedBox(
+                  width: 20,
                 ),
-              ),
-            ],
-          )
-        ],
+                GestureDetector(
+                  onTap: () {
+                    authProvider.logout(context);
+                  },
+                  child: Container(
+                    width: (MediaQuery.of(context).size.width / 2.5),
+                    height: (MediaQuery.of(context).size.width / 2.5),
+                    child: Card(
+                      color: primaryColor,
+                      child: const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.logout_rounded,
+                              size: 60,
+                              color: Colors.white,
+                            ),
+                            Text(
+                              "Logout",
+                              style: TextStyle(
+                                  fontFamily: "Poppins", color: Colors.white),
+                            )
+                          ]),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+          ],
+        ),
       )),
     );
   }

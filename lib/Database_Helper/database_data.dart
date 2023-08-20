@@ -7,6 +7,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:http/http.dart' as http;
 import 'package:wowtickets/Database_Helper/database_helper.dart';
 import '../assistant/Models/tickets_model.dart';
+import '../utills/utills.dart';
 
 class DatabaseData {
   Database? _database;
@@ -34,7 +35,12 @@ class DatabaseData {
     return _database!;
   }
 
-  Future<void> sendTicketsToAPI() async {
+  Future<void> sendTicketsToAPI(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) =>
+          PrograssDialog(message: "Sync please wait..."),
+    );
     try {
       DatabaseHelper databaseHelper = DatabaseHelper();
 
@@ -73,5 +79,6 @@ class DatabaseData {
         e.toString(),
       );
     }
+    Navigator.pop(context);
   }
 }
