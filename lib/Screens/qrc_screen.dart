@@ -8,6 +8,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:wowtickets/Database_Helper/database_update.dart';
 import 'package:wowtickets/Screens/home_screen.dart';
 import 'package:wowtickets/assistant/Models/compare_model.dart';
+import 'package:wowtickets/constants.dart';
 
 class QRScanScreen extends StatefulWidget {
   @override
@@ -42,19 +43,30 @@ class _QRScanScreenState extends State<QRScanScreen> {
             await dbHelper.storePurchaseId(purchaseId);
           }
           debugPrint("both id are same why it showing null");
-          Fluttertoast.showToast(msg: "Status Verified");
+          Fluttertoast.showToast(
+              msg: "Status Verified", backgroundColor: Colors.green);
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (c) => HomeScreen()),
+              MaterialPageRoute(builder: (c) => const HomeScreen()),
               (route) => false);
         } else {
-          Fluttertoast.showToast(msg: "Status Expired");
+          Fluttertoast.showToast(
+            msg: "Status Expired",
+            backgroundColor: Colors.green,
+            textColor: backgroundColor,
+          );
         }
       } else {
-        Fluttertoast.showToast(msg: 'Ticket not found');
+        Fluttertoast.showToast(
+            msg: 'Ticket not found',
+            backgroundColor: Colors.red,
+            textColor: backgroundColor);
       }
     } catch (e) {
-      Fluttertoast.showToast(msg: 'Invalid QR Code');
+      Fluttertoast.showToast(
+          msg: 'Invalid QR Code',
+          backgroundColor: Colors.red,
+          textColor: backgroundColor);
     }
   }
 
