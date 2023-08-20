@@ -1,11 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:wowtickets/assistant/Models/compare_model.dart';
 import 'package:http/http.dart' as http;
+
+import '../utills/utills.dart';
 
 class DatabaseUpdater {
   late Database _database;
@@ -112,7 +115,15 @@ class DatabaseUpdater {
     }
   }
 
-  Future<void> performPatchAction() async {
+  Future<void> performPatchAction(
+    BuildContext context,
+  ) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) =>
+          PrograssDialog(message: "Sync please wait..."),
+    );
+
     // Fetch stored ticket IDs from the database
     List<String> storedTicketIds = await getStoredTicketIds();
 
@@ -124,5 +135,6 @@ class DatabaseUpdater {
         msg: "No data Found",
       );
     }
+    Navigator.pop(context);
   }
 }

@@ -183,7 +183,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () async {
                     final dbUpdater = DatabaseUpdater();
                     await dbUpdater.initDatabase();
-                    dbUpdater.performPatchAction();
+                    dbUpdater.performPatchAction(
+                      context,
+                    );
                   },
                   child: Container(
                     width: (MediaQuery.of(context).size.width / 2.5),
