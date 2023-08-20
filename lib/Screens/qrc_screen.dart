@@ -42,7 +42,6 @@ class _QRScanScreenState extends State<QRScanScreen> {
           if (purchaseId == ticket.id) {
             await dbHelper.storePurchaseId(purchaseId);
           }
-          debugPrint("both id are same why it showing null");
           Fluttertoast.showToast(
               msg: "Status Verified", backgroundColor: Colors.green);
           Navigator.pushAndRemoveUntil(
