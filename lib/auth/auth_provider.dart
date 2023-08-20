@@ -36,10 +36,9 @@ class AuthProvider with ChangeNotifier {
     );
     Navigator.pop(context);
     bool isSeller = jsonDecode(response.body)["isSeller"];
-    sellerID = jsonDecode(response.body)["_id"] as String;
+    String sellerID = jsonDecode(response.body)["_id"] as String;
 
     if (response.statusCode == 200 && isSeller == true) {
-      final responseData = json.decode(response.body);
       final token = jsonDecode(response.body)['token'] as String;
 
       _sessionManager.saveToken(token);

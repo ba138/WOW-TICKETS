@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:wowtickets/Database_Helper/database_update.dart';
+import 'package:wowtickets/Screens/home_screen.dart';
 import 'package:wowtickets/assistant/Models/compare_model.dart';
 
 class QRScanScreen extends StatefulWidget {
@@ -38,18 +39,26 @@ class _QRScanScreenState extends State<QRScanScreen> {
           await dbHelper.updateTicketStatus(ticket.id, newStatus);
           await dbHelper.storePurchaseId(purchaseId);
           Fluttertoast.showToast(msg: "Status Verified");
-          Navigator.pop(context);
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (c) => HomeScreen()),
+              (route) => false);
         } else {
           Fluttertoast.showToast(msg: "Status Expired");
-          Navigator.pop(context);
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (c) => HomeScreen()),
+              (route) => false);
         }
       } else {
         Fluttertoast.showToast(msg: 'Ticket not found');
-        Navigator.pop(context);
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (c) => HomeScreen()), (route) => false);
       }
     } catch (e) {
       Fluttertoast.showToast(msg: 'Invalid QR Code');
-      Navigator.pop(context);
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (c) => HomeScreen()), (route) => false);
     }
   }
 
