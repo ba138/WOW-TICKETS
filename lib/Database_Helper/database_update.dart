@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart';
@@ -46,7 +45,11 @@ class DatabaseUpdater {
         return Compare.fromMap(maps.first);
       }
     } catch (e) {
-      debugPrint("Error getting ticket by ID: $e");
+      Fluttertoast.showToast(
+        msg: "Error in getting ID",
+        backgroundColor: wrongColor,
+        textColor: backgroundColor,
+      );
     }
     return null;
   }
@@ -60,7 +63,11 @@ class DatabaseUpdater {
         whereArgs: [ticketId],
       );
     } catch (e) {
-      debugPrint("Error updating ticket status: $e");
+      Fluttertoast.showToast(
+        msg: "Error in updating status",
+        backgroundColor: wrongColor,
+        textColor: backgroundColor,
+      );
     }
   }
 
@@ -79,7 +86,11 @@ class DatabaseUpdater {
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
     } catch (e) {
-      debugPrint("Error storing purchase ID: $e");
+      Fluttertoast.showToast(
+        msg: "Problem in storing data",
+        backgroundColor: wrongColor,
+        textColor: backgroundColor,
+      );
     }
   }
 
@@ -87,11 +98,14 @@ class DatabaseUpdater {
     try {
       final List<Map<String, dynamic>> results =
           await _database.query('compare_status_ids');
-      debugPrint("this is list of ids: $results");
 
       return results.map((map) => map['id'] as String).toList();
     } catch (e) {
-      debugPrint("Error fetching stored ticket IDs: $e");
+      Fluttertoast.showToast(
+        msg: "Problem in storing data",
+        backgroundColor: wrongColor,
+        textColor: backgroundColor,
+      );
       return [];
     }
   }
