@@ -51,20 +51,20 @@ class _QRScanScreenState extends State<QRScanScreen> {
         } else {
           Fluttertoast.showToast(
             msg: "Status Expired",
-            backgroundColor: Colors.green,
+            backgroundColor: correctColor,
             textColor: backgroundColor,
           );
         }
       } else {
         Fluttertoast.showToast(
             msg: 'Ticket not found',
-            backgroundColor: Colors.red,
+            backgroundColor: wrongColor,
             textColor: backgroundColor);
       }
     } catch (e) {
       Fluttertoast.showToast(
           msg: 'Invalid QR Code',
-          backgroundColor: Colors.red,
+          backgroundColor: wrongColor,
           textColor: backgroundColor);
     }
   }
