@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:wowtickets/Database_Helper/database_data.dart';
 import '../assistant/Models/order_Model.dart';
 import '../assistant/Models/tickets_model.dart';
+import '../constants.dart';
 
 class DatabaseHelper {
   late Database _database;
@@ -33,7 +35,11 @@ class DatabaseHelper {
         version: 1,
       );
     } catch (e) {
-      debugPrint("this function number 1 :$e");
+      Fluttertoast.showToast(
+        msg: "Problem in storing data",
+        backgroundColor: wrongColor,
+        textColor: backgroundColor,
+      );
     }
   }
 
