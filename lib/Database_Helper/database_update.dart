@@ -7,6 +7,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:wowtickets/assistant/Models/compare_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:wowtickets/constants.dart';
 
 import '../utills/utills.dart';
 
@@ -106,12 +107,24 @@ class DatabaseUpdater {
       );
 
       if (response.statusCode == 200) {
-        Fluttertoast.showToast(msg: "Data has been sync");
+        Fluttertoast.showToast(
+          msg: "Data has been sync",
+          backgroundColor: correctColor,
+          textColor: backgroundColor,
+        );
       } else {
-        Fluttertoast.showToast(msg: "Problem with connection");
+        Fluttertoast.showToast(
+          msg: "Problem with connection",
+          backgroundColor: wrongColor,
+          textColor: backgroundColor,
+        );
       }
     } catch (e) {
-      debugPrint('Error sending PATCH request: $e');
+      Fluttertoast.showToast(
+        msg: "Problem with connection",
+        backgroundColor: wrongColor,
+        textColor: backgroundColor,
+      );
     }
   }
 
@@ -133,6 +146,8 @@ class DatabaseUpdater {
     } else {
       Fluttertoast.showToast(
         msg: "No data Found",
+        backgroundColor: wrongColor,
+        textColor: backgroundColor,
       );
     }
     Navigator.pop(context);
