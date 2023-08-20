@@ -21,7 +21,16 @@ class SessionManager {
     return _prefs?.getString('token');
   }
 
+  void saveSellerID(String sellerID) {
+    _prefs?.setString('sellerID', sellerID);
+  }
+
+  String? getSellerID() {
+    return _prefs?.getString('sellerID');
+  }
+
   void clearSession() {
     _prefs?.remove('token');
+    _prefs?.remove('sellerID');
   }
 }
