@@ -37,7 +37,9 @@ class _QRScanScreenState extends State<QRScanScreen> {
       if (ticket != null) {
         if (ticket.status != newStatus) {
           await dbHelper.updateTicketStatus(ticket.id, newStatus);
-          await dbHelper.storePurchaseId(purchaseId);
+          await dbHelper.storePurchaseId(
+            ticket.id,
+          );
           Fluttertoast.showToast(msg: "Status Verified");
           Navigator.pushAndRemoveUntil(
               context,
@@ -45,20 +47,12 @@ class _QRScanScreenState extends State<QRScanScreen> {
               (route) => false);
         } else {
           Fluttertoast.showToast(msg: "Status Expired");
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (c) => HomeScreen()),
-              (route) => false);
         }
       } else {
         Fluttertoast.showToast(msg: 'Ticket not found');
-        Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (c) => HomeScreen()), (route) => false);
       }
     } catch (e) {
       Fluttertoast.showToast(msg: 'Invalid QR Code');
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (c) => HomeScreen()), (route) => false);
     }
   }
 

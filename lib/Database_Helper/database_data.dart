@@ -1,13 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:http/http.dart' as http;
-import 'package:wowtickets/Database_Helper/database_helper.dart';
-import '../assistant/Models/tickets_model.dart';
-import '../utills/utills.dart';
 
 class DatabaseData {
   Database? _database;
@@ -35,50 +31,54 @@ class DatabaseData {
     return _database!;
   }
 
-  Future<void> sendTicketsToAPI(BuildContext context) async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) =>
-          PrograssDialog(message: "Sync please wait..."),
-    );
+  Future<List<String>> getStoredTicketIds() async {
     try {
-      DatabaseHelper databaseHelper = DatabaseHelper();
+      final List<Map<String, dynamic>>? results =
+          await _database?.query('comparestatusids');
+      debugPrint("this is list of ids: $results");
+      if (results != null) {
+        return results.map((map) => map['id'] as String).toList();
+      } else {
+        debugPrint("Database instance is null");
+        return [];
+      }
+    } catch (e) {
+      debugPrint("Error fetching stored ticket IDs: $e");
+      return [];
+    }
+  }
 
-      await databaseHelper.initDatabase();
+  Future<void> patchTicketIds(List<String> ticketIds) async {
+    final url = Uri.parse(
+        'https://wow-tickets-app-staging.up.railway.app/api/purchasedTickets/use');
 
-      List<Ticket> tickets = await databaseHelper.getTickets();
-      List<Map<String, dynamic>> ticketsData = tickets.map((ticket) {
-        return {
-          'id': ticket.id,
-          'status': ticket.status ? true : false,
-        };
-      }).toList();
-      debugPrint(
-        ticketsData.toString(),
-      );
-
-      final url = Uri.parse(
-        'https://wow-tickets-app-staging.up.railway.app/api/purchasedTickets/status',
-      );
-
-      final response = await http.post(
+    try {
+      final response = await http.patch(
         url,
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(
-          {'ticketData': ticketsData},
-        ),
+        body: jsonEncode({'ticketIds': ticketIds}),
       );
 
       if (response.statusCode == 200) {
-        Fluttertoast.showToast(msg: "Data has been sync");
+        debugPrint('PATCH request successful');
       } else {
-        Fluttertoast.showToast(msg: "Problem with sync");
+        debugPrint(
+            'PATCH request failed with status code: ${response.statusCode}');
       }
     } catch (e) {
-      debugPrint(
-        e.toString(),
-      );
+      debugPrint('Error sending PATCH request: $e');
     }
-    Navigator.pop(context);
+  }
+
+  Future<void> performPatchAction() async {
+    // Fetch stored ticket IDs from the database
+    List<String> storedTicketIds = await getStoredTicketIds();
+
+    if (storedTicketIds.isNotEmpty) {
+      // Send a PATCH request with the fetched ticket IDs
+      await patchTicketIds(storedTicketIds);
+    } else {
+      debugPrint('No stored ticket IDs found.');
+    }
   }
 }

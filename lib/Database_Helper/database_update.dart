@@ -59,7 +59,7 @@ class DatabaseUpdater {
   Future<void> storePurchaseId(String purchaseId) async {
     try {
       await _database.insert(
-        'change status ids', // Replace with the actual table name
+        'comparestatusids',
         {'id': purchaseId},
         conflictAlgorithm: ConflictAlgorithm.replace,
       );

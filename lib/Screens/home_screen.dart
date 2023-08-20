@@ -68,12 +68,11 @@ class _HomeScreenState extends State<HomeScreen> {
       Navigator.pop(context);
 
       Fluttertoast.showToast(
-        msg: "data has been import",
+        msg: "Data has been import",
       );
     } catch (e) {
       Fluttertoast.showToast(msg: "Unable to import data");
     }
-    Navigator.pop(context);
   }
 
   @override
@@ -141,7 +140,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     String? sellerID =
                         Provider.of<SessionManager>(context, listen: false)
                             .getSellerID();
-                    insertDataFromJsonResponse(sellerID!);
+                    if (sellerID != null) {
+                      insertDataFromJsonResponse(sellerID);
+                    } else {
+                      Fluttertoast.showToast(msg: "Seller ID is empty");
+                    }
                   },
                   child: Container(
                     width: (MediaQuery.of(context).size.width / 2.5),
@@ -178,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    dbData.sendTicketsToAPI(context);
+                    dbData.performPatchAction();
                   },
                   child: Container(
                     width: (MediaQuery.of(context).size.width / 2.5),
