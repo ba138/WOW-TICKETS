@@ -36,14 +36,11 @@ class _QRScanScreenState extends State<QRScanScreen> {
       if (ticket != null) {
         if (ticket.status != newStatus) {
           await dbHelper.updateTicketStatus(ticket.id, newStatus);
-
-          String message = 'Ticket ID: ${ticket.id} - Status updated';
-          Fluttertoast.showToast(msg: message);
+          await dbHelper.storePurchaseId(purchaseId);
+          Fluttertoast.showToast(msg: "Status Verified");
           Navigator.pop(context);
         } else {
-          String message =
-              'Ticket ID: ${ticket.id} - Status already up to date';
-          Fluttertoast.showToast(msg: message);
+          Fluttertoast.showToast(msg: "Status Expired");
           Navigator.pop(context);
         }
       } else {
