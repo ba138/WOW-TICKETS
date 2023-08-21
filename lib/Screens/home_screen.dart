@@ -13,6 +13,7 @@ import 'package:wowtickets/Screens/qrc_screen.dart';
 import 'package:wowtickets/auth/auth_provider.dart';
 import 'package:wowtickets/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:wowtickets/utills/dialog.dart';
 import '../Database_Helper/database_helper.dart';
 import '../assistant/Models/order_Model.dart';
 import '../assistant/Models/tickets_model.dart';
@@ -186,11 +187,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         await (Connectivity().checkConnectivity());
                     if (connectivityResult == ConnectivityResult.mobile ||
                         connectivityResult == ConnectivityResult.wifi) {
-                      final dbUpdater = DatabaseUpdater();
-                      await dbUpdater.initDatabase();
-                      dbUpdater.performPatchAction(
-                        context,
-                      ); // Connected to mobile data or Wi-Fi
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (c) => const Alert(),
+                          ));
+                      // Connected to mobile data or Wi-Fi
                     } else {
                       Fluttertoast.showToast(
                         msg: "Please check your internet connection",
