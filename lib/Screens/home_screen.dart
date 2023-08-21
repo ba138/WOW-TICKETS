@@ -182,11 +182,22 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 GestureDetector(
                   onTap: () async {
-                    final dbUpdater = DatabaseUpdater();
-                    await dbUpdater.initDatabase();
-                    dbUpdater.performPatchAction(
-                      context,
-                    );
+                    var connectivityResult =
+                        await (Connectivity().checkConnectivity());
+                    if (connectivityResult == ConnectivityResult.mobile ||
+                        connectivityResult == ConnectivityResult.wifi) {
+                      final dbUpdater = DatabaseUpdater();
+                      await dbUpdater.initDatabase();
+                      dbUpdater.performPatchAction(
+                        context,
+                      ); // Connected to mobile data or Wi-Fi
+                    } else {
+                      Fluttertoast.showToast(
+                        msg: "Please check your internet connection",
+                        backgroundColor: wrongColor,
+                        textColor: backgroundColor,
+                      ); // Not connected
+                    }
                   },
                   child: Container(
                     width: (MediaQuery.of(context).size.width / 2.5),
