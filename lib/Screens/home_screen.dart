@@ -100,192 +100,208 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 40,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (c) => QRScanScreen(),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    width: (MediaQuery.of(context).size.width / 2.5),
-                    height: (MediaQuery.of(context).size.width / 2.5),
-                    child: Card(
-                      color: primaryColor,
-                      child: const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.qr_code_scanner,
-                              size: 60,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              "Scann",
-                              style: TextStyle(
-                                  fontFamily: "Poppins", color: Colors.white),
-                            )
-                          ]),
-                    ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (c) => QRScanScreen(),
+                  ),
+                );
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: (MediaQuery.of(context).size.width / 3.5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    200,
                   ),
                 ),
-                const SizedBox(
-                  width: 20,
+                child: Card(
+                  borderOnForeground: true,
+                  color: primaryColor,
+                  child: const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.qr_code_scanner,
+                          size: 50,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          "Scann",
+                          style: TextStyle(
+                              fontFamily: "Poppins", color: Colors.white),
+                        )
+                      ]),
                 ),
-                GestureDetector(
-                  onTap: () async {
-                    var connectivityResult =
-                        await (Connectivity().checkConnectivity());
-                    if (connectivityResult == ConnectivityResult.mobile ||
-                        connectivityResult == ConnectivityResult.wifi) {
-                      String? sellerID =
-                          Provider.of<SessionManager>(context, listen: false)
-                              .getSellerID();
-                      if (sellerID != null) {
-                        insertDataFromJsonResponse(sellerID);
-                      } else {
-                        Fluttertoast.showToast(msg: "Seller ID is empty");
-                      }
-                      // Connected to mobile data or Wi-Fi
-                    } else {
-                      Fluttertoast.showToast(
-                        msg: "Please check your internet connection",
-                        backgroundColor: wrongColor,
-                        textColor: backgroundColor,
-                      ); // Not connected
-                    }
-                  },
-                  child: Container(
-                    width: (MediaQuery.of(context).size.width / 2.5),
-                    height: (MediaQuery.of(context).size.width / 2.5),
-                    child: Card(
-                      color: primaryColor,
-                      child: const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.download,
-                              size: 60,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              "Import",
-                              style: TextStyle(
-                                fontFamily: "Poppins",
-                                color: Colors.white,
-                              ),
-                            )
-                          ]),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
             const SizedBox(
-              height: 40,
+              height: 24,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () async {
-                    var connectivityResult =
-                        await (Connectivity().checkConnectivity());
-                    if (connectivityResult == ConnectivityResult.mobile ||
-                        connectivityResult == ConnectivityResult.wifi) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (c) => const Alert(),
-                          ));
-                      // Connected to mobile data or Wi-Fi
-                    } else {
-                      Fluttertoast.showToast(
-                        msg: "Please check your internet connection",
-                        backgroundColor: wrongColor,
-                        textColor: backgroundColor,
-                      ); // Not connected
-                    }
-                  },
-                  child: Container(
-                    width: (MediaQuery.of(context).size.width / 2.5),
-                    height: (MediaQuery.of(context).size.width / 2.5),
-                    child: Card(
-                      color: primaryColor,
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.import_export_outlined,
-                            size: 60,
+            GestureDetector(
+              onTap: () async {
+                var connectivityResult =
+                    await (Connectivity().checkConnectivity());
+                if (connectivityResult == ConnectivityResult.mobile ||
+                    connectivityResult == ConnectivityResult.wifi) {
+                  String? sellerID =
+                      Provider.of<SessionManager>(context, listen: false)
+                          .getSellerID();
+                  if (sellerID != null) {
+                    insertDataFromJsonResponse(sellerID);
+                  } else {
+                    Fluttertoast.showToast(msg: "Seller ID is empty");
+                  }
+                  // Connected to mobile data or Wi-Fi
+                } else {
+                  Fluttertoast.showToast(
+                    msg: "Please check your internet connection",
+                    backgroundColor: wrongColor,
+                    textColor: backgroundColor,
+                  ); // Not connected
+                }
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: (MediaQuery.of(context).size.width / 3.5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    32,
+                  ),
+                ),
+                child: Card(
+                  borderOnForeground: true,
+                  color: primaryColor,
+                  child: const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.download,
+                          size: 50,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          "Import",
+                          style: TextStyle(
+                            fontFamily: "Poppins",
                             color: Colors.white,
                           ),
-                          Text(
-                            "Sync",
-                            style: TextStyle(
-                              fontFamily: "Poppins",
-                              color: Colors.white,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
+                        )
+                      ]),
                 ),
-                const SizedBox(
-                  width: 20,
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    var connectivityResult =
-                        await (Connectivity().checkConnectivity());
-                    if (connectivityResult == ConnectivityResult.mobile ||
-                        connectivityResult == ConnectivityResult.wifi) {
-                      authProvider
-                          .logout(context); // Connected to mobile data or Wi-Fi
-                    } else {
-                      Fluttertoast.showToast(
-                        msg: "Please check your internet connection",
-                        backgroundColor: wrongColor,
-                        textColor: backgroundColor,
-                      ); // Not connected
-                    }
-                  },
-                  child: Container(
-                    width: (MediaQuery.of(context).size.width / 2.5),
-                    height: (MediaQuery.of(context).size.width / 2.5),
-                    child: Card(
-                      color: primaryColor,
-                      child: const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.logout_rounded,
-                              size: 60,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              "Logout",
-                              style: TextStyle(
-                                  fontFamily: "Poppins", color: Colors.white),
-                            )
-                          ]),
-                    ),
-                  ),
-                )
-              ],
+              ),
             ),
             const SizedBox(
-              height: 40,
+              height: 24,
+            ),
+            GestureDetector(
+              onTap: () async {
+                var connectivityResult =
+                    await (Connectivity().checkConnectivity());
+                if (connectivityResult == ConnectivityResult.mobile ||
+                    connectivityResult == ConnectivityResult.wifi) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (c) => const Alert(),
+                      ));
+                  // Connected to mobile data or Wi-Fi
+                } else {
+                  Fluttertoast.showToast(
+                    msg: "Please check your internet connection",
+                    backgroundColor: wrongColor,
+                    textColor: backgroundColor,
+                  ); // Not connected
+                }
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: (MediaQuery.of(context).size.width / 3.5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    32,
+                  ),
+                ),
+                child: Card(
+                  borderOnForeground: true,
+                  color: primaryColor,
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.import_export_outlined,
+                        size: 50,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        "Sync",
+                        style: TextStyle(
+                          fontFamily: "Poppins",
+                          color: Colors.white,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            GestureDetector(
+              onTap: () async {
+                var connectivityResult =
+                    await (Connectivity().checkConnectivity());
+                if (connectivityResult == ConnectivityResult.mobile ||
+                    connectivityResult == ConnectivityResult.wifi) {
+                  authProvider
+                      .logout(context); // Connected to mobile data or Wi-Fi
+                } else {
+                  Fluttertoast.showToast(
+                    msg: "Please check your internet connection",
+                    backgroundColor: wrongColor,
+                    textColor: backgroundColor,
+                  ); // Not connected
+                }
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: (MediaQuery.of(context).size.width / 3.5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    32,
+                  ),
+                ),
+                child: Card(
+                  borderOnForeground: true,
+                  color: primaryColor,
+                  child: const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.logout_rounded,
+                          size: 50,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          "Logout",
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            color: Colors.white,
+                          ),
+                        )
+                      ]),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 24,
             ),
           ],
         ),

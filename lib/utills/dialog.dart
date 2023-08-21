@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wowtickets/constants.dart';
+import 'package:wowtickets/utills/utills.dart';
 
 import '../Database_Helper/database_update.dart';
 
@@ -29,7 +30,10 @@ class _AlertState extends State<Alert> {
               children: [
                 const Text(
                   "Are you want to sync data",
-                  style: TextStyle(fontSize: 18, fontFamily: "Poppins"),
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontFamily: "Poppins",
+                      color: Colors.black54),
                 ),
                 const SizedBox(
                   height: 20,
@@ -55,6 +59,11 @@ class _AlertState extends State<Alert> {
                         width: 100,
                         child: ElevatedButton(
                           onPressed: () async {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) => PrograssDialog(
+                                  message: "Sync please wait..."),
+                            );
                             var connectivityResult =
                                 await (Connectivity().checkConnectivity());
                             if (connectivityResult ==
@@ -74,6 +83,7 @@ class _AlertState extends State<Alert> {
                                 textColor: backgroundColor,
                               ); // Not connected
                             }
+                            Navigator.pop(context);
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,

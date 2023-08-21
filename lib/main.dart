@@ -12,7 +12,7 @@ void main() {
         Provider(create: (context) => SessionManager()),
         // Other providers if needed
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }

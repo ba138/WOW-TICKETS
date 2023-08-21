@@ -41,21 +41,57 @@ class _LogInScreenState extends State<LogInScreen> {
                   color: primaryColor,
                   height: 80,
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 10,
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Please Login into your account",
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    fontSize: 16,
+                    color: primaryColor,
+                  ),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Email",
+                      style: TextStyle(
+                          fontFamily: "Poppins", color: Colors.black54),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 12,
                 ),
                 TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: _emailController,
                   decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(),
-                    hintText: 'please enter your email',
-                    labelText: 'Email',
+                    filled: true,
+                    border: OutlineInputBorder(borderSide: BorderSide.none),
+                    hintText: 'Please enter your email',
                   ),
                 ),
                 const SizedBox(
                   height: 20,
+                ),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Password",
+                      style: TextStyle(
+                          fontFamily: "Poppins", color: Colors.black54),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 12,
                 ),
                 Container(
                   height: MediaQuery.of(context).size.height / 7 / 2,
@@ -63,10 +99,10 @@ class _LogInScreenState extends State<LogInScreen> {
                     obscureText: isSecure,
                     controller: _passwordController,
                     decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      focusedBorder: const OutlineInputBorder(),
+                      filled: true,
+                      border:
+                          const OutlineInputBorder(borderSide: BorderSide.none),
                       hintText: 'please enter your password',
-                      labelText: 'Password',
                       suffix: IconButton(
                         onPressed: () {},
                         icon: Icon(
@@ -76,7 +112,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 8,
+                  height: MediaQuery.of(context).size.height / 14,
                 ),
                 GestureDetector(
                   onTap: () async {
@@ -99,8 +135,8 @@ class _LogInScreenState extends State<LogInScreen> {
                     }
                   },
                   child: Container(
-                    height: 64,
-                    width: MediaQuery.of(context).size.width * 0.4,
+                    height: 60,
+                    width: double.infinity,
                     decoration: BoxDecoration(
                       color: primaryColor,
                       border: Border.all(
