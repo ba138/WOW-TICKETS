@@ -72,6 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
       Fluttertoast.showToast(
         msg: "Data has been import",
+        backgroundColor: correctColor,
+        textColor: backgroundColor,
       );
     } catch (e) {
       Fluttertoast.showToast(msg: "Unable to import data");
@@ -138,14 +140,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 20,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    String? sellerID =
-                        Provider.of<SessionManager>(context, listen: false)
-                            .getSellerID();
-                    if (sellerID != null) {
-                      insertDataFromJsonResponse(sellerID);
+                  onTap: () async {
+                    var connectivityResult =
+                        await (Connectivity().checkConnectivity());
+                    if (connectivityResult == ConnectivityResult.mobile ||
+                        connectivityResult == ConnectivityResult.wifi) {
+                      String? sellerID =
+                          Provider.of<SessionManager>(context, listen: false)
+                              .getSellerID();
+                      if (sellerID != null) {
+                        insertDataFromJsonResponse(sellerID);
+                      } else {
+                        Fluttertoast.showToast(msg: "Seller ID is empty");
+                      }
+                      // Connected to mobile data or Wi-Fi
                     } else {
-                      Fluttertoast.showToast(msg: "Seller ID is empty");
+                      Fluttertoast.showToast(
+                        msg: "Please check your internet connection",
+                        backgroundColor: wrongColor,
+                        textColor: backgroundColor,
+                      ); // Not connected
                     }
                   },
                   child: Container(

@@ -52,7 +52,10 @@ class AuthProvider with ChangeNotifier {
           MaterialPageRoute(builder: (c) => const HomeScreen()),
           (route) => false);
     } else {
-      Fluttertoast.showToast(msg: "Unable to Login");
+      Fluttertoast.showToast(
+        msg: "Unable to Login",
+        backgroundColor: wrongColor,
+      );
     }
   }
 

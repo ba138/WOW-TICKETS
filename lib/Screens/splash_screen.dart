@@ -1,6 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wowtickets/Screens/home_screen.dart';
 import 'package:wowtickets/Screens/login_screen.dart';
 import 'package:wowtickets/constants.dart';
@@ -29,23 +31,33 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(
       const Duration(seconds: 2),
     );
-
-    if (authProvider.isLoggedIn) {
-      debugPrint("loged in user");
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        ),
-      );
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      if (authProvider.isLoggedIn) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const LogInScreen(),
+          ),
+        );
+      }
+      // Connected to mobile data or Wi-Fi
     } else {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const LogInScreen(),
-        ),
+      Fluttertoast.showToast(
+        msg: "Please check your internet connection",
+        backgroundColor: wrongColor,
+        textColor: backgroundColor,
       );
+      Navigator.pop(context);
+      // Not connected
     }
   }
 

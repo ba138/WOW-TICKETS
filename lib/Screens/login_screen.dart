@@ -1,5 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:wowtickets/auth/auth_provider.dart';
 import 'package:wowtickets/constants.dart';
@@ -75,12 +79,24 @@ class _LogInScreenState extends State<LogInScreen> {
                   height: MediaQuery.of(context).size.height / 8,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    authProvider.login(
-                      _emailController.text,
-                      _passwordController.text,
-                      context,
-                    );
+                  onTap: () async {
+                    var connectivityResult =
+                        await (Connectivity().checkConnectivity());
+                    if (connectivityResult == ConnectivityResult.mobile ||
+                        connectivityResult == ConnectivityResult.wifi) {
+                      authProvider.login(
+                        _emailController.text,
+                        _passwordController.text,
+                        context,
+                      );
+                      // Connected to mobile data or Wi-Fi
+                    } else {
+                      Fluttertoast.showToast(
+                        msg: "Please check your internet connection",
+                        backgroundColor: wrongColor,
+                        textColor: backgroundColor,
+                      ); // Not connected
+                    }
                   },
                   child: Container(
                     height: 64,
