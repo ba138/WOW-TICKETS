@@ -8,7 +8,25 @@ class Alert extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: backgroundColor,
-      child: Container(),
+      child: Card(
+        child: Column(
+          children: [
+            const Text("Are you want to sync data"),
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text("No"),
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text("Yes"),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 }
