@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -217,8 +218,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 20,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    authProvider.logout(context);
+                  onTap: () async {
+                    var connectivityResult =
+                        await (Connectivity().checkConnectivity());
+                    if (connectivityResult == ConnectivityResult.mobile ||
+                        connectivityResult == ConnectivityResult.wifi) {
+                      authProvider
+                          .logout(context); // Connected to mobile data or Wi-Fi
+                    } else {
+                      Fluttertoast.showToast(
+                        msg: "Please check your internet connection",
+                        backgroundColor: wrongColor,
+                        textColor: backgroundColor,
+                      ); // Not connected
+                    }
                   },
                   child: Container(
                     width: (MediaQuery.of(context).size.width / 2.5),
