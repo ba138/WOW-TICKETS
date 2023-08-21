@@ -53,9 +53,9 @@ class AuthProvider with ChangeNotifier {
           (route) => false);
     } else {
       Fluttertoast.showToast(
-        msg: "Unable to Login",
-        backgroundColor: wrongColor,
-      );
+          msg: "Unable to Login",
+          backgroundColor: wrongColor,
+          textColor: backgroundColor);
     }
   }
 
