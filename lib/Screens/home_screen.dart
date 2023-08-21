@@ -7,8 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:wowtickets/Database_Helper/database_data.dart';
-import 'package:wowtickets/Database_Helper/database_update.dart';
+
 import 'package:wowtickets/Screens/qrc_screen.dart';
 import 'package:wowtickets/auth/auth_provider.dart';
 import 'package:wowtickets/constants.dart';
