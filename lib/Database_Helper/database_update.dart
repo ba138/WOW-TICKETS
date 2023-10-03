@@ -100,7 +100,7 @@ class DatabaseUpdater {
       return results.map((map) => map['id'] as String).toList();
     } catch (e) {
       Fluttertoast.showToast(
-        msg: "Problem in storing data",
+        msg: "Problem in storing data1",
         backgroundColor: wrongColor,
         textColor: backgroundColor,
       );
