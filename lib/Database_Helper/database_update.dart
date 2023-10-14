@@ -96,7 +96,6 @@ class DatabaseUpdater {
     try {
       final List<Map<String, dynamic>> results =
           await _database.query('compare_status_ids');
-
       return results.map((map) => map['id'] as String).toList();
     } catch (e) {
       Fluttertoast.showToast(

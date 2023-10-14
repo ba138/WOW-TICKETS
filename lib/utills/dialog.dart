@@ -20,7 +20,7 @@ class _AlertState extends State<Alert> {
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: backgroundColor,
-      child: Container(
+      child: SizedBox(
         height: 150,
         width: double.infinity,
         child: Card(
@@ -43,7 +43,7 @@ class _AlertState extends State<Alert> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
+                      SizedBox(
                         width: 100,
                         child: ElevatedButton(
                           onPressed: () {
@@ -55,7 +55,7 @@ class _AlertState extends State<Alert> {
                           child: const Text("No"),
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: 100,
                         child: ElevatedButton(
                           onPressed: () async {

@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (c) => QRScanScreen(),
+                    builder: (c) => const QRScanScreen(),
                   ),
                 );
               },

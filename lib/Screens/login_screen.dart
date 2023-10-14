@@ -92,7 +92,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 const SizedBox(
                   height: 12,
                 ),
-                Container(
+                SizedBox(
                   height: MediaQuery.of(context).size.height / 7 / 2,
                   child: TextFormField(
                     obscureText: isSecure,

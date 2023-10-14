@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'tickets_model.dart';
 
 class Order {

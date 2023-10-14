@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
 
 import 'dart:convert';
 
@@ -11,6 +11,8 @@ import 'package:wowtickets/assistant/Models/compare_model.dart';
 import 'package:wowtickets/constants.dart';
 
 class QRScanScreen extends StatefulWidget {
+  const QRScanScreen({super.key});
+
   @override
   _QRScanScreenState createState() => _QRScanScreenState();
 }
